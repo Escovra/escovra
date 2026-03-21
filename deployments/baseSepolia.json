@@ -1,0 +1,10 @@
+{
+  "network": "baseSepolia",
+  "chainId": 84532,
+  "proxy": "0x423F4fE54fd06b87b29472D94fdCA1356a11e0d5",
+  "paymentToken": "0x4200000000000000000000000000000000000006",
+  "treasury": "0x1e10e6CC3AA74d3916b97293255e60E1d069c796",
+  "deployedAt": "2026-03-20T01:36:31.132Z",
+  "deployer": "0x1e10e6CC3AA74d3916b97293255e60E1d069c796",
+  "agentRegistry": "0xF55A3CF45c41F75eB8f9747f9cf2b2F2526996D6"
+}
