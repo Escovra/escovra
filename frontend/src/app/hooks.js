@@ -150,6 +150,23 @@ export function useAllAgents() {
   return { agents, isLoading, refetch };
 }
 
+// ── Write: Set provider ──────────────────────
+export function useSetProvider() {
+  const { data: hash, writeContract, isPending, error } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+
+  const setProvider = (jobId, providerAddress) => {
+    writeContract({
+      address: CONTRACTS.agenticCommerce,
+      abi: COMMERCE_ABI,
+      functionName: 'setProvider',
+      args: [BigInt(jobId), providerAddress],
+    });
+  };
+
+  return { setProvider, hash, isPending, isConfirming, isSuccess, error };
+}
+
 // ── Write: Create job ────────────────────────
 export function useCreateJob() {
   const { data: hash, writeContract, isPending, error } = useWriteContract();

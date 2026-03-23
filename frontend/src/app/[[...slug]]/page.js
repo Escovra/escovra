@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useApp, STATUS_STYLES, SKILLS, shortAddr } from '../store';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import { useJobCounter, useAgentCount, useCreateJob, useSetBudget, useApproveWETH, useFundJob, useSubmitWork, useCompleteJob, useRejectJob, useRegisterAgent, useWethBalance, useDepositWETH } from '../hooks';
+import { useJobCounter, useAgentCount, useCreateJob, useSetBudget, useApproveWETH, useFundJob, useSubmitWork, useCompleteJob, useRejectJob, useRegisterAgent, useWethBalance, useDepositWETH, useSetProvider } from '../hooks';
 import { IS_LIVE } from '../web3-config';
 
 // ── NAVBAR ────────────────────────────────────
@@ -197,6 +197,7 @@ function DetailPage({ jobId, setPage }) {
   const { address } = useAccount();
   const { formattedWeth, refetch: refetchWeth } = useWethBalance(address);
   const { deposit, isPending: isDepositing } = useDepositWETH();
+  const { setProvider: setProviderOnchain, isPending: isSettingProvider } = useSetProvider();
   const { setBudget, isPending: isSettingBudget } = useSetBudget();
   const { approve, isPending: isApproving } = useApproveWETH();
   const { fund, isPending: isFunding } = useFundJob();
@@ -224,7 +225,7 @@ function DetailPage({ jobId, setPage }) {
   let actions = null;
   if (job.status==="Open") actions = (<>
     <div className="ab"><div className="ab-title">Set budget</div><div className="ab-desc">Set the WETH amount to lock in escrow.</div><div className="ab-row"><input className="ab-input" placeholder="Amount in WETH" value={budgetVal} onChange={e=>setBudgetVal(e.target.value)}/><button className="ab-btn p" disabled={isSettingBudget} onClick={() => handleAction('Set budget', () => setBudget(job.id, budgetVal))}>{isSettingBudget ? '...' : 'Set budget'}</button></div></div>
-    {!job.provider && <div className="ab"><div className="ab-title">Assign provider</div><div className="ab-desc">Assign a wallet as provider.</div><div className="ab-row"><input className="ab-input" placeholder="0x... provider address" value={providerVal} onChange={e=>setProviderVal(e.target.value)}/><button className="ab-btn p">Assign</button></div></div>}
+    {!job.provider && <div className="ab"><div className="ab-title">Assign provider</div><div className="ab-desc">Assign a wallet as provider.</div><div className="ab-row"><input className="ab-input" placeholder="0x... provider address" value={providerVal} onChange={e=>setProviderVal(e.target.value)}/><button className="ab-btn p" disabled={isSettingProvider} onClick={() => handleAction('Assign Provider', () => setProviderOnchain(job.id, providerVal))}>{isSettingProvider ? '...' : 'Assign'}</button></div></div>}
     <div className="ab"><div className="ab-title">Fund escrow</div><div className="ab-desc">Lock WETH in escrow.</div><div className="ab-row">
       {needsWrap && <button className="ab-btn s" disabled={isDepositing} onClick={() => handleAction('Wrap ETH', () => deposit(deficit))}>{isDepositing ? '...' : `1. Wrap ${deficit} ETH`}</button>}
       <button className="ab-btn s" style={{marginLeft:needsWrap?4:0}} disabled={isApproving} onClick={() => handleAction('Approve WETH', () => approve(job.budget))}>{isApproving ? '...' : (needsWrap?'2. Approve':'1. Approve')}</button>
