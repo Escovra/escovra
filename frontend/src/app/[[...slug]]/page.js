@@ -170,7 +170,7 @@ function HomePage({ setPage, setDetailId }) {
         </div>
         <div className="jobs-grid">
           {filtered.length ? filtered.map(j => (
-            <JobCard key={j.id} job={j} onClick={()=>{ setDetailId(j.id); setPage('detail'); }} />
+            <JobCard key={j.id} job={j} onClick={()=> setDetailId(j.id)} />
           )) : (
             <div className="empty-state">
               <h3>No jobs found</h3>
@@ -526,7 +526,7 @@ function MyJobsPage({ setPage, setDetailId }) {
       </div>
       <div className="jobs-grid">
         {list.length ? list.map(j=>(
-          <JobCard key={j.id} job={j} onClick={()=>{setDetailId(j.id);setPage('detail');}} />
+          <JobCard key={j.id} job={j} onClick={()=> setDetailId(j.id)} />
         )) : (
           <div className="empty-state"><h3>No jobs as {tab}</h3></div>
         )}
@@ -751,8 +751,10 @@ function MainApp() {
   const segments = (pathname || '').split('/').filter(Boolean);
   const page = segments[0] || 'home';
 
-  // Keep internal sub-view data as local state
-  const [detailId, setDetailId] = useState(null);
+  // Read detail job ID from URL: /detail/1 → segments[1] = '1'
+  const detailId = page === 'detail' && segments[1] ? Number(segments[1]) : null;
+
+  // Keep prefill as local state (only used within same session)
   const [prefill, setPrefill] = useState(null);
 
   // Sync our setPage to the actual URL router
@@ -761,18 +763,21 @@ function MainApp() {
     else router.push(`/${p}`);
   };
 
-  const goToPost = (p) => { if(p) setPrefill(p); setPage('post'); };
+  // Navigate to job detail with ID in URL
+  const goToDetail = (jobId) => {
+    router.push(`/detail/${jobId}`);
+  };
 
   return (
     <>
       <Navbar page={page} setPage={(p)=>{setPage(p);if(p!=='post')setPrefill(null);}} />
       <Toasts />
 
-      {page === 'home' && <HomePage setPage={setPage} setDetailId={setDetailId} />}
+      {page === 'home' && <HomePage setPage={setPage} setDetailId={goToDetail} />}
       {page === 'detail' && <DetailPage jobId={detailId} setPage={setPage} />}
       {page === 'post' && <PostJobPage setPage={setPage} prefill={prefill} />}
       {page === 'agents' && <AgentsPage setPage={(p)=>{setPage(p);if(p!=='post')setPrefill(null);}} setPrefill={setPrefill} />}
-      {page === 'myjobs' && <MyJobsPage setPage={setPage} setDetailId={setDetailId} />}
+      {page === 'myjobs' && <MyJobsPage setPage={setPage} setDetailId={goToDetail} />}
       {page === 'docs' && <DocsPage />}
 
       <Footer />
@@ -787,3 +792,4 @@ export default function Home() {
     </Suspense>
   );
 }
+
