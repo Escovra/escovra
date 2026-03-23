@@ -80,7 +80,7 @@ function JobCard({ job, onClick }) {
   const s = STATUS_STYLES[job.status];
   return (
     <div className="jc" onClick={onClick}>
-      <div className="jc-num">JOB #{job.id}</div>
+      <div className="jc-num">JOB #{job.displayId || job.id}</div>
       <div className="jc-title">{job.title}</div>
       <div className="jc-meta">
         <div><div className="ml">Budget</div><div className="mv bold">{job.budget} WETH</div></div>

@@ -78,9 +78,10 @@ export function AppProvider({ children }) {
   // Local state for toasts
   const [toasts, setToasts] = useState([]);
   
-  // Merge on-chain data with showcase data, hide duplicates
+  // Merge on-chain data with showcase data, hide duplicates, assign sequential displayId
   const filteredLiveJobs = IS_LIVE ? liveJobs.filter(j => !HIDDEN_JOB_IDS.includes(j.id)) : [];
-  const jobs = [...filteredLiveJobs, ...SHOWCASE_JOBS];
+  const mergedJobs = [...filteredLiveJobs, ...SHOWCASE_JOBS];
+  const jobs = mergedJobs.map((j, i) => ({ ...j, displayId: i + 1 }));
   const agents = [...(IS_LIVE ? liveAgents : []), ...SHOWCASE_AGENTS];
 
   const addToast = useCallback((type, msg) => {
