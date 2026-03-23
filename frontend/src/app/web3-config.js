@@ -37,6 +37,32 @@ export const COMMERCE_ABI = [
   ], stateMutability: 'view' },
   { type: 'function', name: 'paymentToken', inputs: [], outputs: [{ type: 'address' }], stateMutability: 'view' },
   { type: 'function', name: 'platformFeeBP', inputs: [], outputs: [{ type: 'uint256' }], stateMutability: 'view' },
+  { type: 'function', name: 'getJob', inputs: [{ name: 'jobId', type: 'uint256' }], outputs: [{
+    type: 'tuple', components: [
+      { name: 'id', type: 'uint256' },
+      { name: 'client', type: 'address' },
+      { name: 'provider', type: 'address' },
+      { name: 'evaluator', type: 'address' },
+      { name: 'description', type: 'string' },
+      { name: 'budget', type: 'uint256' },
+      { name: 'expiredAt', type: 'uint256' },
+      { name: 'status', type: 'uint8' },
+      { name: 'hook', type: 'address' },
+    ]
+  }], stateMutability: 'view' },
+  { type: 'function', name: 'getJobsBatch', inputs: [{ name: 'from', type: 'uint256' }, { name: 'to', type: 'uint256' }], outputs: [{
+    type: 'tuple[]', components: [
+      { name: 'id', type: 'uint256' },
+      { name: 'client', type: 'address' },
+      { name: 'provider', type: 'address' },
+      { name: 'evaluator', type: 'address' },
+      { name: 'description', type: 'string' },
+      { name: 'budget', type: 'uint256' },
+      { name: 'expiredAt', type: 'uint256' },
+      { name: 'status', type: 'uint8' },
+      { name: 'hook', type: 'address' },
+    ]
+  }], stateMutability: 'view' },
   // Write
   { type: 'function', name: 'createJob', inputs: [
     { name: 'provider', type: 'address' },
