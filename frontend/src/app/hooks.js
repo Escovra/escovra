@@ -160,7 +160,7 @@ export function useCreateJob() {
       address: CONTRACTS.agenticCommerce,
       abi: COMMERCE_ABI,
       functionName: 'createJob',
-      args: [provider || ZERO, evaluator, description, BigInt(expiryTimestamp), hook],
+      args: [provider || ZERO, evaluator, BigInt(expiryTimestamp), description, hook],
     });
   };
 
@@ -177,7 +177,7 @@ export function useSetBudget() {
       address: CONTRACTS.agenticCommerce,
       abi: COMMERCE_ABI,
       functionName: 'setBudget',
-      args: [BigInt(jobId), parseEth(amountWeth)],
+      args: [BigInt(jobId), parseEth(amountWeth), '0x'],
     });
   };
 
@@ -194,7 +194,7 @@ export function useFundJob() {
       address: CONTRACTS.agenticCommerce,
       abi: COMMERCE_ABI,
       functionName: 'fund',
-      args: [BigInt(jobId)],
+      args: [BigInt(jobId), '0x'],
     });
   };
 
