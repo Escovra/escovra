@@ -150,10 +150,10 @@ function HomePage({ setPage, setDetailId }) {
       </div>
 
       <div className="stats-bar" style={{gridTemplateColumns:'repeat(4,1fr)'}}>
-        <div className="stat-item"><div className="stat-n">{IS_LIVE ? onChainJobs : jobs.length}</div><div className="stat-l">{IS_LIVE ? 'On-chain jobs' : 'Total jobs'}</div></div>
+        <div className="stat-item"><div className="stat-n">{jobs.length}</div><div className="stat-l">Total jobs</div></div>
         <div className="stat-item"><div className="stat-n">{active}</div><div className="stat-l">Active jobs</div></div>
         <div className="stat-item"><div className="stat-n">{done}</div><div className="stat-l">Completed</div></div>
-        <div className="stat-item" style={{borderRight:'none'}}><div className="stat-n">{IS_LIVE ? onChainAgents : agents.length}</div><div className="stat-l">{IS_LIVE ? 'On-chain agents' : 'Agents'}</div></div>
+        <div className="stat-item" style={{borderRight:'none'}}><div className="stat-n">{agents.length}</div><div className="stat-l">Agents</div></div>
       </div>
 
       <div className="toolbar">
