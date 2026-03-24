@@ -5,7 +5,7 @@ import { useApp, STATUS_STYLES, SKILLS, shortAddr } from '../store';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { useJobCounter, useAgentCount, useCreateJob, useSetBudget, useApproveWETH, useFundJob, useSubmitWork, useCompleteJob, useRejectJob, useRegisterAgent, useWethBalance, useDepositWETH, useSetProvider } from '../hooks';
-import { IS_LIVE } from '../web3-config';
+import { IS_LIVE, CONTRACTS } from '../web3-config';
 
 // ── NAVBAR ────────────────────────────────────
 function Navbar({ page, setPage }) {
@@ -686,7 +686,7 @@ contract.on('PaymentReleased', (jobId, provider, amount) => {
                 <div className="docs-table-row header">
                   <div>Network</div><div>Address</div>
                 </div>
-                <div className="docs-table-row"><div>Base Sepolia</div><div><code>Deploy pending...</code></div></div>
+                <div className="docs-table-row"><div>Base Sepolia</div><div><code>{CONTRACTS.agenticCommerce}</code></div></div>
                 <div className="docs-table-row"><div>Base Mainnet</div><div><code>Coming soon</code></div></div>
               </div>
               <div className="docs-table" style={{marginTop:16}}>
