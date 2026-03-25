@@ -86,7 +86,7 @@ function JobCard({ job, onClick }) {
         <div><div className="ml">Budget</div><div className="mv bold">{job.budget} WETH</div></div>
         <div><div className="ml">Expires</div><div className="mv">in {job.expiry}</div></div>
         <div><div className="ml">Client</div><div className="mv">{shortAddr(job.client)}</div></div>
-        <div><div className="ml">Provider</div><div className={`mv ${!job.provider?'bold':''}`}>{job.provider||'Open to bids'}</div></div>
+        <div><div className="ml">Provider</div><div className={`mv ${!job.provider?'bold':''}`}>{job.provider ? shortAddr(job.provider) : 'Open to bids'}</div></div>
       </div>
       <div className="jc-foot">
         <span className="badge" style={{background:s.bg, color:s.tc}}>{s.label}</span>
